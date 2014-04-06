@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Solver {
 	Grid grid=new Grid();
-	
 	public Solver(){
 	}
 	
@@ -12,24 +11,17 @@ public class Solver {
 		grid.addArray(a);
 	}
 	public void solve(){
-		clean();
 		findPossible();
 		singlePossibilities();
-	}
-	public void clean(){
-		for(int i=0;i<9;i++){
-			for(int j=0;j<9;j++){
-				if(grid.get(i, j)!=0){
-					grid.removePoss(i, j);
-				}
-			}
-		}
 	}
 	public void findPossible(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				if(grid.get(i, j)==0){
 					grid.addPoss(i, j,findPossibleCell(i,j));	
+				}
+				else{
+					grid.addPoss(i, j, null);
 				}
 			}
 		}
@@ -92,7 +84,7 @@ public class Solver {
 	public void singlePossibilities(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
-				if((grid.get(i, j)==0)&&(grid.getPoss(i, j)).size()==1){
+				if((grid.get(i, j)==0)&&(grid.getPoss(i, j)).size()==1&&grid.getPoss(i, j).get(0)!=0){
 					grid.addNumber(i, j, (grid.getPoss(i, j).get(0)));
 				}
 			}

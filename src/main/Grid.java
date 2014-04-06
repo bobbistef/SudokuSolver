@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Grid {
 	int[][]nums;
-	ArrayList<Integer>[][]poss;
+	ArrayList<Integer>[][]poss=new ArrayList[9][9];
 	public Grid(){
 		
 	}
@@ -17,9 +17,7 @@ public class Grid {
 	public void addPoss(int x, int y,ArrayList<Integer> a){
 		poss[x][y]=a;
 	}
-	public void removePoss(int x, int y){
-		poss[x][y]=new ArrayList<Integer>();
-	}
+	
 	public int get(int x,int y){
 		if(nums[x][y]>0&&nums[x][y]<10){
 			return nums[x][y];

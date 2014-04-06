@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.FieldPosition;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -73,10 +74,7 @@ public class Driver {
 						}
 					}
 				}
-				pan.remove(b);
-				pan.repaint();
 				so.addArray(nums);
-				so.solve();
 				work();
 			}
 			
@@ -84,11 +82,14 @@ public class Driver {
 		
 	}
 	public void work(){
+		so.solve();
 		for(int i=0;i<9;i++){
 			for(int k=0;k<9;k++){
-				field[i][k].setText(Integer.toString(so.grid().get(i, k)));
+				if(so.grid().get(i, k)!=0){
+					field[i][k].setText(Integer.toString(so.grid().get(i, k)));
+				}
 			}
 		}
-		work();
+		pan.repaint();
 	}
 }
