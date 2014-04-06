@@ -3,25 +3,37 @@ package main;
 import java.util.ArrayList;
 
 public class Solver {
-	Grid grid=new Grid();
+	private Grid grid=new Grid();
+	
 	public Solver(){
 	}
 	
 	public void addArray(int[][]a){
 		grid.addArray(a);
 	}
+	public Grid grid(){
+		return grid;
+	}
 	public void solve(){
+		clean();
 		findPossible();
 		singlePossibilities();
+		solitaryPossibilities();
+	}
+	public void clean(){
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++){
+				if(grid.get(i, j)!=0){
+					grid.addPoss(i, j, null);	
+				}
+			}
+		}
 	}
 	public void findPossible(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				if(grid.get(i, j)==0){
 					grid.addPoss(i, j,findPossibleCell(i,j));	
-				}
-				else{
-					grid.addPoss(i, j, null);
 				}
 			}
 		}
@@ -90,7 +102,95 @@ public class Solver {
 			}
 		}
 	}
-	public Grid grid(){
-		return grid;
+	public void solitaryPossibilities(){
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++){
+				if(grid.get(i, j)==0){
+					checkSolitaryPossibility(i,j);	
+				}
+			}
+		}
+		clean();
+	}
+	public int checkSolitaryPossibility(int x, int y){
+		ArrayList<Integer> myPoss=grid.getPoss(x, y);
+		ArrayList<Integer>found=new ArrayList<Integer>();
+		//check horizontal
+		for(int i=0;i<9;i++){
+			if(grid.get(i,y)==0&&i!=x){
+				ArrayList<Integer>toadd=grid.getPoss(i, y);
+				for(int a:toadd){
+					if(!found.contains(a)){
+						found.add(a);
+					}
+				}
+			}
+		}
+		myPoss.removeAll(found);
+		if(myPoss.size()>0){
+			grid.addNumber(x,y,myPoss.get(0));
+			return myPoss.get(0);
+		}
+		
+		myPoss=grid.getPoss(x, y);
+		//checkvertical
+		for(int i=0;i<9;i++){
+			if(grid.get(x,i)==0&&i!=y){
+				ArrayList<Integer>toadd=grid.getPoss(x, i);
+				for(int a:toadd){
+					if(!found.contains(a)){
+						found.add(a);
+					}
+				}
+			}
+		}
+		myPoss.removeAll(found);
+		if(myPoss.size()>0){
+			grid.addNumber(x,y,myPoss.get(0));
+			return myPoss.get(0);
+		}
+		//checksquare
+		myPoss=grid.getPoss(x, y);
+		int grx=0;
+		int gry=0;
+		if(x<3){
+			grx=0;
+		}
+		else if(x<6){
+			grx=3;
+		}
+		else{
+			grx=6;
+		}
+		if(y<3){
+			gry=0;
+		}
+		else if(y<6){
+			gry=3;
+		}
+		else{
+			gry=6;
+		}
+		for(int i=0;i<3;i++){
+			for(int j=0;j<3;j++){
+				int tx=grx+i;
+				int ty=gry+j;
+				if(grid.get(tx,ty)==0&&i!=x&&j!=y){
+					ArrayList<Integer>toadd=grid.getPoss(x, y);
+					for(int a:toadd){
+						if(!found.contains(a)){
+							found.add(a);
+						}
+					}
+				}
+				
+			}
+		}
+		myPoss.removeAll(found);
+		if(myPoss.size()>0){
+			grid.addNumber(x,y,myPoss.get(0));
+			return myPoss.get(0);
+		}
+		return 0;
 	}
 }
