@@ -32,15 +32,22 @@ public class Driver {
 		pan.setBounds(f.getBounds());
 		pan.setLayout(null);
 		JTextField[][] field=new JTextField[9][9];
+		
+		int startx=(x/2)-135;
+		int starty=(y/2)-135;
+		
 		for(int i=0;i<9;i++){
+			starty=(y/2)-135;
 			for(int j=0;j<9;j++){
 				field[i][j]=new JTextField();
+				pan.add(field[i][j]);
+				field[i][j].setBounds(startx, starty, 30, 30);
+				starty+=30;
 			}
+			startx+=30;
 		}
+	
 		
-		int startx=(x/2)-90;
-		int starty=(y/2)-90;
-		
-		
+
 	}
 }
