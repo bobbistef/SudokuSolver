@@ -17,7 +17,7 @@ public class Solver {
 	public void solve(){
 		refresh();
 		onlyChoice();
-		singlePossibilities();
+		//singlePossibilities();
 	}
 	public void refresh(){
 		clean();

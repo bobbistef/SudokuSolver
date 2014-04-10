@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -87,6 +88,12 @@ public class Driver {
 			for(int k=0;k<9;k++){
 				if(so.grid().get(i, k)!=0){
 					field[i][k].setText(Integer.toString(so.grid().get(i, k)));
+					if(so.grid().changed(i, k)==true){
+						field[i][k].setBackground(Color.getHSBColor(120, 40, 70));
+					}
+					else{
+						field[i][k].setBackground(Color.WHITE);
+					}
 				}
 			}
 		}
