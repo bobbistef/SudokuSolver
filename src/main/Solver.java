@@ -17,8 +17,8 @@ public class Solver {
 	public void solve(){
 		clean();
 		findPossible();
+		onlyChoice();
 		singlePossibilities();
-		solitaryPossibilities();
 	}
 	public void clean(){
 		for(int i=0;i<9;i++){
@@ -93,7 +93,7 @@ public class Solver {
 		poss.removeAll(found);
 		return poss;
 	}
-	public void singlePossibilities(){
+	public void onlyChoice(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				if((grid.get(i, j)==0)&&(grid.getPoss(i, j)).size()==1&&grid.getPoss(i, j).get(0)!=0){
@@ -102,17 +102,17 @@ public class Solver {
 			}
 		}
 	}
-	public void solitaryPossibilities(){
+	public void singlePossibilities(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				if(grid.get(i, j)==0){
-					checkSolitaryPossibility(i,j);	
+					checkSinglePossibility(i,j);	
 				}
 			}
 		}
 		clean();
 	}
-	public int checkSolitaryPossibility(int x, int y){
+	public int checkSinglePossibility(int x, int y){
 		ArrayList<Integer> myPoss=grid.getPoss(x, y);
 		ArrayList<Integer>found=new ArrayList<Integer>();
 		//check horizontal
@@ -127,7 +127,7 @@ public class Solver {
 			}
 		}
 		myPoss.removeAll(found);
-		if(myPoss.size()>0){
+		if(myPoss.size()==1){
 			grid.addNumber(x,y,myPoss.get(0));
 			return myPoss.get(0);
 		}
@@ -145,7 +145,7 @@ public class Solver {
 			}
 		}
 		myPoss.removeAll(found);
-		if(myPoss.size()>0){
+		if(myPoss.size()==1){
 			grid.addNumber(x,y,myPoss.get(0));
 			return myPoss.get(0);
 		}
@@ -187,7 +187,7 @@ public class Solver {
 			}
 		}
 		myPoss.removeAll(found);
-		if(myPoss.size()>0){
+		if(myPoss.size()==1){
 			grid.addNumber(x,y,myPoss.get(0));
 			return myPoss.get(0);
 		}
