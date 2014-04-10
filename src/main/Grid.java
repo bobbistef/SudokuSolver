@@ -22,6 +22,7 @@ public class Grid {
 		if(nums[x][y]>0&&nums[x][y]<10){
 			return nums[x][y];
 		}
+		//return 0 if there's no number in grid yet
 		return 0;
 	}
 	public ArrayList<Integer> getPoss(int x, int y){

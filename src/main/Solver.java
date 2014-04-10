@@ -15,10 +15,13 @@ public class Solver {
 		return grid;
 	}
 	public void solve(){
-		clean();
-		findPossible();
+		refresh();
 		onlyChoice();
 		singlePossibilities();
+	}
+	public void refresh(){
+		clean();
+		findPossible();
 	}
 	public void clean(){
 		for(int i=0;i<9;i++){
@@ -101,32 +104,68 @@ public class Solver {
 				}
 			}
 		}
+		refresh();
 	}
 	public void singlePossibilities(){
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
 				if(grid.get(i, j)==0){
-					checkSinglePossibility(i,j);	
+					checkSinglePossibility(i,j);
 				}
 			}
 		}
-		clean();
+		refresh();
 	}
 	public int checkSinglePossibility(int x, int y){
 		ArrayList<Integer> myPoss=grid.getPoss(x, y);
 		ArrayList<Integer>found=new ArrayList<Integer>();
 		//check horizontal
+		
+		System.out.println(x+","+y+":");
+		
+		
 		for(int i=0;i<9;i++){
 			if(grid.get(i,y)==0&&i!=x){
 				ArrayList<Integer>toadd=grid.getPoss(i, y);
 				for(int a:toadd){
 					if(!found.contains(a)){
 						found.add(a);
+						
+						System.out.print(a);
 					}
 				}
 			}
 		}
+		System.out.println(".");
+		System.out.print("FOUND:");
+		for(int a:found){
+			System.out.print(a);
+		}
+		System.out.println(".");
+		System.out.print("MYPOSS:");
+		for(int a:myPoss){
+			System.out.print(a);
+		}
+		System.out.println(".");
+		
+//		if(x==5&&y==0){
+//			System.out.print("FOUND:");
+//			for(int a:found){
+//				System.out.print(a);
+//			}
+//			System.out.println(".");
+//			System.out.print("MYPOSS:");
+//			for(int a:myPoss){
+//				System.out.print(a);
+//			}
+//			System.out.println(".");
+//		}
 		myPoss.removeAll(found);
+//		System.out.print(x+","+y+":");
+//		for(int a:myPoss){
+//			System.out.print(a);
+//		}
+//		System.out.println(";");
 		if(myPoss.size()==1){
 			grid.addNumber(x,y,myPoss.get(0));
 			return myPoss.get(0);
@@ -144,6 +183,7 @@ public class Solver {
 				}
 			}
 		}
+		
 		myPoss.removeAll(found);
 		if(myPoss.size()==1){
 			grid.addNumber(x,y,myPoss.get(0));
@@ -183,7 +223,6 @@ public class Solver {
 						}
 					}
 				}
-				
 			}
 		}
 		myPoss.removeAll(found);
