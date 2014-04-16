@@ -71,7 +71,10 @@ public class Driver {
 					for(int k=0;k<9;k++){
 						String s=field[i][k].getText();
 						if(!s.equals("")){
-							nums[i][k]=Integer.parseInt(s);
+							int pa=Integer.parseInt(s);
+							if(pa>0&&pa<10){
+								nums[i][k]=pa;
+							}
 						}
 					}
 				}
@@ -94,6 +97,13 @@ public class Driver {
 					else{
 						field[i][k].setBackground(Color.WHITE);
 					}
+				}
+				if(so.grid().get(i, k)==0){
+					System.out.print(i+","+k+":");
+					for(int a:so.grid().getPoss(i, k)){
+						System.out.print(a);			
+					}
+					System.out.println("");
 				}
 			}
 		}

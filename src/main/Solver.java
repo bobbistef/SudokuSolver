@@ -17,7 +17,7 @@ public class Solver {
 	public void solve(){
 		refresh();
 		onlyChoice();
-		//singlePossibilities();
+		singlePossibilities();
 	}
 	public void refresh(){
 		clean();
@@ -117,80 +117,70 @@ public class Solver {
 		refresh();
 	}
 	public int checkSinglePossibility(int x, int y){
-		ArrayList<Integer> myPoss=grid.getPoss(x, y);
-		ArrayList<Integer>found=new ArrayList<Integer>();
-		//check horizontal
-		
-		System.out.println(x+","+y+":");
-		
-		
+		//checkvert
+		ArrayList<Integer>myposs=grid.getPoss(x, y);
+		ArrayList<Integer>foundposs=new ArrayList<Integer>();
 		for(int i=0;i<9;i++){
-			if(grid.get(i,y)==0&&i!=x){
-				ArrayList<Integer>toadd=grid.getPoss(i, y);
-				for(int a:toadd){
-					if(!found.contains(a)){
-						found.add(a);
-						
-						System.out.print(a);
+			if(i!=x&&grid.get(i, y)==0){
+				ArrayList<Integer>temp=grid.getPoss(i, y);
+				for(int a:temp){
+					if(!foundposs.contains(a)){
+						foundposs.add(a);
 					}
 				}
 			}
 		}
-		System.out.println(".");
-		System.out.print("FOUND:");
-		for(int a:found){
-			System.out.print(a);
+		ArrayList<Integer>np=new ArrayList<Integer>();
+		for(int i:myposs){
+			boolean found=false;
+			for(int b:foundposs){
+				if(i==b){
+					found=true;
+				}
+			}
+			if(found==false){
+				np.add(i);
+			}
 		}
-		System.out.println(".");
-		System.out.print("MYPOSS:");
-		for(int a:myPoss){
-			System.out.print(a);
+		myposs=np;
+		if(myposs.size()==1){
+			grid.addNumber(x, y, myposs.get(0));
+			return 0;
 		}
-		System.out.println(".");
-		
-//		if(x==5&&y==0){
-//			System.out.print("FOUND:");
-//			for(int a:found){
-//				System.out.print(a);
-//			}
-//			System.out.println(".");
-//			System.out.print("MYPOSS:");
-//			for(int a:myPoss){
-//				System.out.print(a);
-//			}
-//			System.out.println(".");
-//		}
-		myPoss.removeAll(found);
-//		System.out.print(x+","+y+":");
-//		for(int a:myPoss){
-//			System.out.print(a);
-//		}
-//		System.out.println(";");
-		if(myPoss.size()==1){
-			grid.addNumber(x,y,myPoss.get(0));
-			return myPoss.get(0);
-		}
-		
-		myPoss=grid.getPoss(x, y);
-		//checkvertical
+		//check horiz
+		myposs=grid.getPoss(x, y);
+		foundposs.clear();
 		for(int i=0;i<9;i++){
-			if(grid.get(x,i)==0&&i!=y){
-				ArrayList<Integer>toadd=grid.getPoss(x, i);
-				for(int a:toadd){
-					if(!found.contains(a)){
-						found.add(a);
+			if(i!=y&&grid.get(x, i)==0){
+				ArrayList<Integer>temp=grid.getPoss(x, i);
+				for(int a:temp){
+					if(!foundposs.contains(a)){
+						foundposs.add(a);
 					}
 				}
 			}
 		}
-		
-		myPoss.removeAll(found);
-		if(myPoss.size()==1){
-			grid.addNumber(x,y,myPoss.get(0));
-			return myPoss.get(0);
+		np.clear();
+		for(int i:myposs){
+			boolean found=false;
+			for(int b:foundposs){
+				if(i==b){
+					found=true;
+				}
+			}
+			if(found==false){				
+				np.add(i);
+			}
+		}
+		myposs=np;
+		if(myposs.size()==1){
+			grid.addNumber(x, y, myposs.get(0));
+			return 0;
 		}
 		//checksquare
-		myPoss=grid.getPoss(x, y);
+		myposs=grid.getPoss(x, y);
+		foundposs.clear();
+		np.clear();
 		int grx=0;
 		int gry=0;
 		if(x<3){
@@ -215,20 +205,31 @@ public class Solver {
 			for(int j=0;j<3;j++){
 				int tx=grx+i;
 				int ty=gry+j;
-				if(grid.get(tx,ty)==0&&i!=x&&j!=y){
-					ArrayList<Integer>toadd=grid.getPoss(x, y);
-					for(int a:toadd){
-						if(!found.contains(a)){
-							found.add(a);
+				if(tx!=x&&ty!=y&&grid.get(tx,ty)==0){
+					ArrayList<Integer>temp=grid.getPoss(tx, ty);
+					for(int a:temp){
+						if(!foundposs.contains(a)){
+							foundposs.add(a);
 						}
 					}
 				}
 			}
 		}
-		myPoss.removeAll(found);
-		if(myPoss.size()==1){
-			grid.addNumber(x,y,myPoss.get(0));
-			return myPoss.get(0);
+		for(int i:myposs){
+			boolean found=false;
+			for(int b:foundposs){
+				if(i==b){
+					found=true;
+				}
+			}
+			if(found==false){				
+				np.add(i);
+			}
+		}
+		myposs=np;
+		if(myposs.size()==1){
+			grid.addNumber(x, y, myposs.get(0));
+			return 0;
 		}
 		return 0;
 	}
