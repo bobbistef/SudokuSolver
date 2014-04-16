@@ -98,13 +98,6 @@ public class Driver {
 						field[i][k].setBackground(Color.WHITE);
 					}
 				}
-				if(so.grid().get(i, k)==0){
-					System.out.print(i+","+k+":");
-					for(int a:so.grid().getPoss(i, k)){
-						System.out.print(a);			
-					}
-					System.out.println("");
-				}
 			}
 		}
 		pan.repaint();
